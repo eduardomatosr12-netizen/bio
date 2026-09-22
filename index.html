@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <title>Nome do Cliente | Link Bio</title>
+
+  <!-- ================================================================
+       SEO / Compartilhamento
+       ================================================================ -->
+  <meta name="description" content="Links e contatos de Nome do Cliente. Agende pelo WhatsApp, siga no Instagram e veja nossa localização." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="Nome do Cliente | Link Bio" />
+  <meta property="og:description" content="Links e contatos de Nome do Cliente." />
+  <meta property="og:image" content="icon-512.png" />
+  <meta name="twitter:card" content="summary" />
+
+  <!-- ================================================================
+       PWA — substitua pelos ícones reais depois
+       ================================================================ -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Nome do Cliente" />
+
+  <!-- Fonte Inter (fallback para system-ui se offline) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600;700&family=Poppins:wght@400;500;700&family=Montserrat:wght@400;600;700&family=Lato:wght@400;700&family=Merriweather:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- ================================================================
+       DESIGN SYSTEM INJETÁVEL
+       ----------------------------------------------------------------
+       Estes valores são injetados dinamicamente (banco de dados ou
+       painel de controle do cliente). Altere apenas as variáveis —
+       todo o resto do CSS consome estes tokens.
+       ================================================================ -->
+  <style>
+    :root {
+      color-scheme: light dark;
+
+      /* == Configurações Globais da Página == */
+      --page-bg: #f4f6fb;            /* Cor ou Gradiente de fundo do site do cliente */
+      --font-main: 'Inter', sans-serif; /* Fonte escolhida pelo cliente */
+
+      /* == Cores de Textos == */
+      --text-title: #0f172a;         /* Cor do nome do cliente */
+      --text-body: #475569;          /* Cor da biografia, endereço e descrições */
+
+      /* == Ícones de ação (Redes sociais) == */
+      --btn-quick-bg: #ffffff;       /* Fundo dos botões de ação */
+      --btn-quick-text: #0f172a;     /* Texto/Ícone dos botões de ação */
+
+      /* == Cards principais (Links) == */
+      --card-destaque-bg: #ffffff;   /* Fundo dos cards de link */
+      --card-destaque-text: #0f172a; /* Texto/Ícone dos cards de link */
+
+      /* == Modificadores de Formato (Bordas) == */
+      --global-radius: 14px;         /* 0px = quadrado | 14px = arredondado | 999px = oval */
+      --btn-border-color: #dbe3ee;   /* Cor do contorno dos botões e cards de destaque */
+
+      /* == Dark mode (sistema pronto — ativa quando não há cores do cliente injetadas) == */
+      --page-bg: light-dark(#f4f6fb, #0b1020);
+      --text-title: light-dark(#0f172a, #f1f5f9);
+      --text-body: light-dark(#475569, #94a3b8);
+      --btn-quick-bg: light-dark(#ffffff, #1a2333);
+      --btn-quick-text: light-dark(#0f172a, #f1f5f9);
+      --card-destaque-bg: light-dark(#ffffff, #1a2333);
+      --card-destaque-text: light-dark(#0f172a, #f1f5f9);
+
+      /* == Tokens de apoio (design system) ==
+         O body ocupa 100% do viewport; esta coluna cresce fluidamente e
+         trava em 840px para legibilidade confortável em monitores largos. */
+      --max-width: 840px;
+      --spacing: 1rem;
+
+      --card-bg: var(--card-destaque-bg);
+      --card-fg: var(--card-destaque-text);
+      --muted: var(--text-body);
+      --card-border: color-mix(in srgb, var(--card-fg) 13%, transparent);
+      --ui-border-color: var(--card-border);
+      --surface-hover: color-mix(in srgb, var(--card-fg) 5%, var(--card-bg));
+
+      --primary: #6366f1;
+      --primary-soft: color-mix(in srgb, var(--primary) 9%, var(--card-bg));
+      --primary-border: color-mix(in srgb, var(--primary) 45%, transparent);
+
+      --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 18px rgba(15, 23, 42, 0.07);
+      --shadow-md: 0 2px 4px rgba(15, 23, 42, 0.05), 0 14px 34px rgba(15, 23, 42, 0.12);
+      --shadow-avatar: 0 10px 30px rgba(15, 23, 42, 0.22);
+      --radius-md: 14px;
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ================================================================
+       RESET / BASE
+       ================================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { overflow-x: hidden; }
+
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+    body {
+      position: relative;
+      font-family: var(--font-main);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--text-title);
+      background-color: var(--page-bg);
+      background-size: cover;
+      background-position: center;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Glow decorativo sutil (acima do fundo, abaixo do conteúdo) */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(60rem 34rem at 50% -12%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 70%),
+        radial-gradient(44rem 26rem at 100% 112%, color-mix(in srgb, var(--muted) 7%, transparent), transparent 70%);
+    }
+
+    main.page, footer.site-footer { position: relative; z-index: 1; }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    button {
+      font-family: inherit;
+      font-size: inherit;
+      border: none;
+      cursor: pointer;
+      background: none;
+      color: inherit;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+      border-radius: var(--radius-md);
+    }
+
+    /* ================================================================
+       ANIMAÇÃO PADRÃO (adaptativa — independe da cor do botão)
+       ================================================================ */
+    .featured__card, .social-icon, .quick__item {
+      transition: transform var(--transition), box-shadow var(--transition),
+                  border-color var(--transition), background-color var(--transition);
+    }
+
+    /* ---- Cor global dos textos = texto interno dos cards/ícones ----
+       --btn-text-color-global é injetado via JS. Fallback: cores do card. */
+    .featured__card,
+    #pgQuick .featured__card,
+    .social-icon {
+      color: var(--btn-text-color-global, var(--card-destaque-text, var(--card-fg)));
+    }
+    .social-icon {
+      color: var(--btn-text-color-global, var(--btn-quick-text, var(--card-fg)));
+    }
+
+    /* ---- Textos do perfil permanecem isolados (variáveis próprias) ---- */
+    #pgTitle {
+      color: var(--profile-name-color, var(--text-title, #0f172a));
+    }
+
+    /* Bio usa o token próprio; o endereço é um badge escuro com texto
+       branco (veja .profile__address abaixo). */
+    #pgSubtitle {
+      color: var(--profile-bio-color, var(--text-body, #475569));
+    }
+
+    #pgAddress {
+      color: var(--profile-address-text, #ffffff);
+    }
+
+    /* ================================================================
+       LAYOUT GERAL
+       ----------------------------------------------------------------
+       Container de CONTEÚDO (legibilidade): width 100% + max-width 840px.
+       O container da APLICAÇÃO é o <body> (background cobre 100vw).
+       ================================================================ */
+    .page {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2.75rem var(--spacing) 2rem;
+      flex: 1 0 auto;
+      min-width: 0;
+    }
+
+    /* ================================================================
+       HEADER — PERFIL DO CLIENTE
+       ================================================================ */
+    .profile {
+      --avatar-s: 96px;
+      --banner-h: 150px;
+
+      /* Tokens do header (nome, bio e badge de endereço). Valores padrão
+         do layout de referência; o Painel sobrescreve por cliente através
+         de design.profile.text (estilos inline aplicados nos elementos). */
+      --profile-name-color: light-dark(#dc2626, #f87171);
+      --profile-bio-color: light-dark(#16a34a, #4ade80);
+      --profile-address-bg: rgba(12, 14, 22, 0.82);
+      --profile-address-text: #ffffff;
+      --profile-address-border: rgba(255, 255, 255, 0.16);
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      min-width: 0;
+    }
+
+    /* ---- Banner superior (cover) — design.banner ----
+       O banner reserva SEMPRE a própria altura no fluxo (sem margem
+       negativa): é um limite estrutural do layout. A sobreposição da
+       foto acontece puxando o bloco de informações (.profile__info)
+       para cima, nunca roubando espaço do banner. */
+    .profile__banner {
+      position: relative;
+      z-index: 0;
+      width: 100%;
+      height: min(var(--banner-h, 150px), 160px);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, #0f172a 0%, #334155 55%, #64748b 100%);
+      box-shadow: var(--shadow-xs);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* Fade inferior: integra o cover ao fundo da página */
+    .profile__banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(180deg, transparent 58%, color-mix(in srgb, var(--page-bg) 80%, transparent));
+    }
+
+    .profile__banner-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .profile__banner img,
+    .profile__banner .profile__banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ---- Bloco de Informações (avatar + textos) ----
+       Separado do banner: é ele (e não o banner) que sobe para sobrepor
+       a foto ao cover. Assim, ocultar o "Bloco de Informações" esconde
+       apenas este bloco — o banner continua reservando a própria altura
+       e nada que vier abaixo dele invade a área do cover.
+       A sobreposição só existe quando o banner está visível. */
+    .profile__info {
+      width: 100%;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile__banner:not([hidden]) + .profile__info {
+      margin-top: calc(var(--avatar-s) * -0.45);
+    }
+
+    /* ---- Foto/Logo do perfil — sobreposta ao cover ---- */
+    .profile__avatar {
+      position: relative;
+      z-index: 1;
+      width: var(--avatar-s);
+      height: var(--avatar-s);
+      border-radius: 999px;
+      background: var(--card-destaque-bg, var(--card-bg));
+      color: var(--card-destaque-text, var(--card-fg));
+      border: 3px solid var(--page-bg);
+      box-shadow: var(--shadow-avatar);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+
+    .profile__avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ---- Container de vidro + sombra do avatar (design.profile) ----
+       As variáveis são alimentadas pelo JS a partir do config.js. */
+    .avatar-glass-card {
+      --glass-pad: 0;
+      --glass-bg: transparent;
+      --glass-border: transparent;
+      --glass-blur: 0px;
+      --shadow-x: 0px;
+      --shadow-y: 12px;
+      --shadow-blur: 24px;
+      --shadow-spread: -10px;
+      --shadow-color: rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      padding: var(--glass-pad);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      backdrop-filter: blur(var(--glass-blur));
+      box-shadow: var(--shadow-x) var(--shadow-y) var(--shadow-blur) var(--shadow-spread) var(--shadow-color);
+      will-change: box-shadow, backdrop-filter;
+      transition: background 0.2s ease, border-color 0.2s ease, padding 0.2s ease, box-shadow 0.1s ease-out;
+    }
+
+    /* Anel do avatar (design.profile.shadowOn) — tom neutro e discreto */
+    .avatar-glass-card.avatar-ring {
+      outline: 1px solid color-mix(in srgb, var(--card-destaque-text, var(--card-fg)) 12%, transparent);
+      outline-offset: 0;
+    }
+
+    .avatar-glass-card .profile__avatar { border-radius: inherit; }
+
+    /* ---- Nome do perfil + indicador de verificado ---- */
+    .profile__name-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      margin-top: 1.375rem;
+      min-width: 0;
+    }
+
+    .profile__title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text-title);
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      text-wrap: balance;
+    }
+
+    .profile__verified {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      border-radius: 999px;
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .profile__verified[hidden] { display: none; }
+
+    .profile__verified svg { width: 13px; height: 13px; }
+
+    .profile__subtitle {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--text-body);
+      max-width: 42ch;
+      width: 100%;
+      margin-top: 0.5rem;
+      overflow-wrap: anywhere;
+    }
+
+    /* Endereço: badge fosco escuro (padrão do layout de referência), com
+       pin e texto em branco. Tokens próprios — o Painel pode sobrescrever
+       via design.profile.text.address. */
+    .profile__address {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      margin-top: 0.875rem;
+      max-width: 100%;
+      padding: 0.4375rem 0.875rem;
+      border-radius: 999px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--profile-address-text, #ffffff);
+      background: var(--profile-address-bg, rgba(12, 14, 22, 0.82));
+      border: 1px solid var(--profile-address-border, rgba(255, 255, 255, 0.16));
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow-xs);
+      overflow-wrap: anywhere;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+
+    .profile__address:hover {
+      border-color: color-mix(in srgb, var(--profile-address-text, #ffffff) 34%, transparent);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .profile__address span { overflow-wrap: anywhere; min-width: 0; }
+
+    .profile__address svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* ================================================================
+       FLUXO LIVRE — seções num único container flex
+       (order/largura definidos pelo Painel Axiumlink)
+       ================================================================ */
+    .page-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .pg-item--full { width: 100%; flex: 1 1 100%; }
+    .pg-item--half { flex: 1 1 calc(50% - 0.5rem); }
+    .pg-item--auto { flex: 0 1 auto; }
+
+    .pg-strip {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.75rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+
+    .pg-strip::-webkit-scrollbar { display: none; }
+
+    /* ---- Redes sociais (Lista de Links → ícones circulares) ---- */
+    .pg-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .pg-links--grid { justify-content: center; }
+
+    .pg-links--scroll {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(100, 116, 139, 0.45) transparent;
+      padding-bottom: 6px;
+    }
+
+    .pg-links--scroll::-webkit-scrollbar { height: 6px; }
+    .pg-links--scroll::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.45);
+      border-radius: 999px;
+    }
+    .pg-links--scroll::-webkit-scrollbar-track { background: transparent; }
+
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+      /* Formato Global dos Botões: só sobrescreve o círculo quando o
+         cliente escolheu um formato explicitamente anguloso
+         (--social-icon-radius é injetado via JS nesses casos). */
+      border-radius: var(--social-icon-radius, 50%);
+      background: var(--ui-bg, var(--btn-quick-bg, var(--card-bg)));
+      color: var(--btn-text-color-global, var(--btn-quick-text, var(--card-fg)));
+      border: var(--ui-border, var(--card-border));
+      box-shadow: var(--ui-shadow, var(--shadow-xs));
+      backdrop-filter: var(--ui-blur, none);
+      -webkit-backdrop-filter: var(--ui-blur, none);
+      will-change: transform;
+    }
+
+    .social-icon:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--ui-shadow, var(--shadow-md));
+      border-color: color-mix(in srgb, var(--card-fg) 28%, transparent);
+    }
+
+    .social-icon:active { transform: translateY(0) scale(0.96); }
+
+    .social-icon__inner {
+      display: grid;
+      place-items: center;
+      border-radius: inherit;
+      overflow: hidden;
+    }
+
+    .social-icon__inner svg { width: 22px; height: 22px; }
+    .social-icon__img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ---- Lista de Links — modo lista vertical (cards empilhados) ---- */
+    .pg-links--list {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 0.75rem;
+    }
+
+    .pg-links--list .featured__card {
+      flex-direction: row;
+      text-align: left;
+      justify-content: flex-start;
+      gap: 0.875rem;
+      padding: 0.625rem 0.875rem;
+      min-height: 68px;
+    }
+
+    .pg-links--list .featured__card--compact { width: auto; min-width: 9rem; align-self: flex-start; }
+    .pg-links--list .featured__card--half { width: 100%; }
+    .pg-links--list .featured__card--full { width: 100%; }
+
+    /* ---- Ações Rápidas (main cards) — lista vertical por padrão ---- */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      width: 100%;
+    }
+
+    .quick-grid[hidden] { display: none; }
+
+    .quick-grid .featured__card {
+      flex-direction: column;
+      text-align: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem 0.75rem;
+      min-height: 108px;
+    }
+
+    .quick-grid .featured__icon { width: 44px; height: 44px; }
+    .quick-grid .featured__icon svg { width: 24px; height: 24px; }
+    .quick-grid .featured__arrow { display: none; }
+    .quick-grid .featured__card:only-child { grid-column: 1 / -1; }
+
+    .quick-grid--list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .quick-grid--list .featured__card {
+      flex-direction: row;
+      text-align: left;
+      justify-content: flex-start;
+      gap: 0.875rem;
+      padding: 0.625rem 0.875rem;
+      min-height: 68px;
+    }
+
+    .quick-grid--scroll {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.75rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(100, 116, 139, 0.45) transparent;
+      padding-bottom: 6px;
+    }
+
+    .quick-grid--scroll::-webkit-scrollbar { height: 6px; }
+    .quick-grid--scroll::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.45);
+      border-radius: 999px;
+    }
+    .quick-grid--scroll::-webkit-scrollbar-track { background: transparent; }
+
+    .quick-grid--scroll .featured__card { flex: 0 0 auto; width: auto; min-width: 15rem; }
+
+    .quick-grid .featured__card--full { grid-column: 1 / -1; width: 100%; }
+    .quick-grid--list .featured__card--half { width: calc(50% - 0.375rem); }
+    .quick-grid--list .featured__card--compact { justify-self: flex-start; width: auto; min-width: 9rem; }
+
+    .featured__card--compact {
+      justify-content: center;
+      text-align: center;
+      width: auto;
+      min-width: 9rem;
+    }
+
+    /* ---- Animações de Destaque (por bloco) ---- */
+    .anim-pulse { animation: animPulse 2.2s ease-in-out infinite; }
+    .anim-shake { animation: animShake 2.4s ease-in-out infinite; }
+    .anim-shine { position: relative; overflow: hidden; }
+
+    .anim-shine::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.5) 50%, transparent 70%);
+      transform: translateX(-130%);
+      animation: animShine 2.8s ease-in-out infinite;
+    }
+
+    @keyframes animPulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.045); }
+    }
+
+    @keyframes animShake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-2.5px); }
+      20%, 40%, 60%, 80%      { transform: translateX(2.5px); }
+    }
+
+    @keyframes animShine {
+      0%        { transform: translateX(-130%); }
+      60%, 100% { transform: translateX(130%); }
+    }
+
+    /* ================================================================
+       CARDS DE LINK PRINCIPAIS (ícone à esquerda, texto, seta)
+       ================================================================ */
+    .featured__card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      min-height: 68px;
+      padding: 0.625rem 0.875rem;
+      border-radius: var(--global-radius);
+      background: var(--ui-bg, var(--card-destaque-bg, var(--card-bg)));
+      color: var(--btn-text-color-global, var(--card-destaque-text, var(--card-fg)));
+      border: var(--ui-border, var(--card-border));
+      box-shadow: var(--ui-shadow, var(--shadow-sm));
+      backdrop-filter: var(--ui-blur, none);
+      -webkit-backdrop-filter: var(--ui-blur, none);
+      text-align: left;
+      overflow: hidden;
+      will-change: transform;
+    }
+
+    /* Leve camada de hover (funciona em cards sólidos, outline e vidro) */
+    .featured__card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background-color: transparent;
+      pointer-events: none;
+      transition: background-color var(--transition);
+    }
+
+    .featured__card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--ui-shadow, var(--shadow-md));
+    }
+
+    .featured__card:hover::after { background-color: color-mix(in srgb, var(--card-fg) 4%, transparent); }
+    .featured__card:active { transform: translateY(0) scale(0.99); }
+    .featured__card:active::after { background-color: color-mix(in srgb, var(--card-fg) 7%, transparent); }
+
+    .featured__card:hover { border-color: color-mix(in srgb, var(--card-fg) 26%, transparent); }
+
+    .featured__icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: calc(var(--global-radius) * 0.7);
+      background: color-mix(in srgb, currentColor 10%, transparent);
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .featured__icon svg { width: 26px; height: 26px; }
+    .featured__icon-img { width: 100%; height: 100%; object-fit: cover; }
+
+    .featured__body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .featured__body strong {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      overflow-wrap: anywhere;
+    }
+
+    .featured__body span {
+      font-size: 0.8125rem;
+      opacity: 0.72;
+      overflow-wrap: anywhere;
+    }
+
+    .featured__arrow {
+      flex-shrink: 0;
+      margin-left: auto;
+      width: 18px;
+      height: 18px;
+      opacity: 0.5;
+      position: relative;
+      z-index: 1;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    .featured__card:hover .featured__arrow { transform: translateX(3px); opacity: 0.9; }
+
+    /* ---- Primeiro card (CTA principal) — leve destaque ---- */
+    .featured__card--primary {
+      border-color: var(--primary-border);
+      box-shadow: var(--ui-shadow, var(--shadow-md));
+      background-image: linear-gradient(180deg, var(--primary-soft), transparent 92%);
+    }
+
+    .featured__card--primary:hover { border-color: var(--primary-border); }
+    .featured__card--primary .featured__arrow { opacity: 0.9; }
+    .featured__card--primary .featured__icon {
+      background: color-mix(in srgb, var(--primary) 14%, transparent);
+    }
+
+    /* ---- Card com imagem completa (estilo Beacons) ----
+       A imagem é recortada com object-fit: cover dentro do card,
+       sem distorcer nem estourar. Proporção fallback 16/9; o JS ajusta
+       para a proporção real da imagem (limitada a 4:3 .. 2:1). */
+    .featured__card--banner {
+      padding: 0;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      min-height: 0;
+    }
+
+    /* Nunca esticar o banner além da própria proporção em grade/faixa
+       (align-items: stretch herdaria a altura da linha); em lista vertical
+       mantém a largura total. */
+    .quick-grid .featured__card--banner { align-self: start; }
+    .quick-grid--list .featured__card--banner { align-self: stretch; }
+
+    .featured__banner-img {
+      position: absolute;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center;
+      display: block;
+      max-width: none;
+      max-height: none;
+      flex-shrink: 0;
+      transition: transform 0.4s ease;
+    }
+
+    .featured__card--banner:hover .featured__banner-img { transform: scale(1.02); }
+
+    /* ---- Largura individual ---- */
+    .featured__card--full { grid-column: 1 / -1; width: 100%; }
+    .featured__card--half { width: calc(50% - 0.375rem); }
+    .quick-grid--list .featured__card--half { width: 100%; }
+    .quick-grid--list .featured__card--compact { justify-self: start; }
+
+    /* ================================================================
+       FOOTER DA PLATAFORMA
+       ================================================================ */
+    .site-footer {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 1.5rem var(--spacing) 2rem;
+      border-top: 1px solid color-mix(in srgb, var(--text-body) 16%, transparent);
+    }
+
+    .site-footer__pwa {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-title);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      padding: 0.625rem 1.125rem;
+      box-shadow: var(--shadow-xs);
+      min-height: 44px;
+      touch-action: manipulation;
+      transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+    }
+
+    .site-footer__pwa:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+    .site-footer__pwa:active { transform: scale(0.98); }
+    .site-footer__pwa svg { width: 16px; height: 16px; }
+
+    /* Link discreto de acesso ao painel (engrenagem) */
+    .site-footer__admin {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: color-mix(in srgb, var(--text-body) 62%, transparent);
+      opacity: 0.75;
+      transition: opacity var(--transition), color var(--transition);
+    }
+
+    .site-footer__admin:hover { opacity: 1; }
+    .site-footer__admin svg { width: 15px; height: 15px; }
+
+    /* Cor neutra e discreta — deriva de --text-body */
+    .site-footer__brand {
+      font-size: 0.75rem;
+      color: color-mix(in srgb, var(--text-body) 78%, transparent);
+    }
+
+    .site-footer__brand a {
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ================================================================
+       MODAL PIX (elemento nativo <dialog>)
+       ================================================================ */
+    .pix-modal {
+      position: relative;
+      width: calc(100% - 2.5rem);
+      max-width: 360px;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      background: var(--card-bg);
+      color: var(--text-title);
+      padding: 1.75rem 1.5rem;
+      margin: auto;
+      box-shadow: var(--shadow-md);
+    }
+
+    .pix-modal::backdrop {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
+    }
+
+    .pix-modal[open] { animation: modal-in 0.2s ease; }
+
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .pix-modal__title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.25rem;
+    }
+
+    .pix-modal__text {
+      font-size: 0.8125rem;
+      color: var(--text-body);
+      margin-bottom: 1rem;
+    }
+
+    .pix-modal__key {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      background: var(--card-destaque-bg, var(--card-bg));
+      color: var(--card-destaque-text, var(--card-fg));
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 0.875rem;
+      font-size: 0.8125rem;
+      word-break: break-all;
+      margin-bottom: 0.875rem;
+    }
+
+    .pix-modal__copy {
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--card-destaque-bg, var(--card-bg));
+      background: var(--card-destaque-text, var(--card-fg));
+      border-radius: var(--radius-md);
+      padding: 0.375rem 0.625rem;
+      transition: filter var(--transition);
+    }
+
+    .pix-modal__copy:hover { filter: brightness(0.9); }
+
+    .pix-modal__qr {
+      background: color-mix(in srgb, var(--text-title) 6%, transparent);
+      border: 1px dashed color-mix(in srgb, var(--text-title) 18%, transparent);
+      border-radius: var(--radius-md);
+      height: 140px;
+      display: grid;
+      place-items: center;
+      font-size: 0.8125rem;
+      color: var(--text-body);
+      margin-bottom: 0.875rem;
+    }
+
+    .pix-modal__cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-weight: 600;
+      min-height: 46px;
+      display: grid;
+      place-items: center;
+      background: var(--card-destaque-bg, var(--card-bg));
+      color: var(--card-destaque-text, var(--card-fg));
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+      touch-action: manipulation;
+      transition: transform var(--transition), filter var(--transition), box-shadow var(--transition);
+    }
+
+    .pix-modal__cta:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+    .pix-modal__cta:active { transform: scale(0.98); }
+
+    .pix-modal__close {
+      position: absolute;
+      top: 0.625rem;
+      right: 0.625rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--text-title) 8%, transparent);
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    /* ================================================================
+       PWA — SAFE AREAS (notch e barra de gestos)
+       ================================================================ */
+    .page {
+      padding-top: max(2.75rem, calc(env(safe-area-inset-top) + 1rem));
+      padding-left: max(var(--spacing), env(safe-area-inset-left));
+      padding-right: max(var(--spacing), env(safe-area-inset-right));
+      padding-bottom: max(2rem, calc(env(safe-area-inset-bottom) + 1rem));
+    }
+
+    .site-footer {
+      padding-left: max(var(--spacing), env(safe-area-inset-left));
+      padding-right: max(var(--spacing), env(safe-area-inset-right));
+      padding-bottom: max(2rem, calc(env(safe-area-inset-bottom) + 1.25rem));
+    }
+
+    /* ================================================================
+       PWA — FOLHA DE INSTALAÇÃO (bottom sheet / modal)
+       ================================================================ */
+    .pwa-sheet {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
+      padding: 1.5rem;
+    }
+
+    .pwa-sheet[hidden] { display: none; }
+
+    .pwa-sheet__panel {
+      position: relative;
+      width: min(100%, 340px);
+      background: var(--card-bg);
+      color: var(--text-title);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.5rem 1.5rem;
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+
+    .pwa-sheet__close {
+      position: absolute;
+      top: 0.625rem;
+      right: 0.625rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--text-title) 8%, transparent);
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .pwa-sheet__icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 0.75rem;
+      border-radius: 14px;
+      background: var(--card-destaque-bg, var(--card-bg));
+      color: var(--card-destaque-text, var(--card-fg));
+      border: 1px solid var(--card-border);
+      display: grid;
+      place-items: center;
+    }
+
+    .pwa-sheet__icon svg { width: 26px; height: 26px; }
+
+    .pwa-sheet__title {
+      font-size: 1.125rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.375rem;
+    }
+
+    .pwa-sheet__text {
+      font-size: 0.8125rem;
+      color: var(--text-body);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .pwa-sheet__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      min-height: 46px;
+      font-weight: 700;
+      background: var(--card-destaque-bg, var(--card-bg));
+      color: var(--card-destaque-text, var(--card-fg));
+      border-radius: var(--radius-md);
+      touch-action: manipulation;
+      transition: transform var(--transition), filter var(--transition);
+    }
+
+    .pwa-sheet__btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
+    .pwa-sheet__btn svg { width: 16px; height: 16px; }
+    .pwa-sheet__btn[hidden] { display: none; }
+
+    .pwa-sheet__steps {
+      text-align: left;
+      margin: 0;
+      padding-left: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    .pwa-sheet__steps[hidden] { display: none; }
+
+    /* ---- Aviso de offline ---- */
+    .offline-pill {
+      position: fixed;
+      left: 50%;
+      bottom: max(1rem, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      z-index: 150;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(15, 23, 42, 0.92);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.5rem 0.875rem;
+      border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      pointer-events: none;
+    }
+
+    .offline-pill[hidden] { display: none; }
+    .offline-pill svg { width: 14px; height: 14px; }
+
+    /* ================================================================
+       RESPONSIVO
+       ================================================================ */
+    @media (min-width: 640px) {
+      .page-flow { gap: 2.25rem; }
+    }
+
+    @media (min-width: 768px) {
+      .profile {
+        --avatar-s: 112px;
+        --banner-h: 200px;
+      }
+
+      .profile__banner { height: var(--banner-h, 200px); }
+
+      .profile__name-row { margin-top: 1.75rem; }
+
+      .profile__title {
+        font-size: 1.875rem;
+        letter-spacing: -0.025em;
+      }
+
+      .profile__subtitle { font-size: 1rem; max-width: 46ch; }
+
+      .quick-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .quick-grid--list .featured__card { min-height: 72px; }
+
+      .pg-links--list .featured__card { min-height: 72px; }
+
+      .featured__card { min-height: 72px; }
+
+      .social-icon { width: 56px; height: 56px; }
+    }
+
+    /* Cards de links em grade/faixa: empilham (ícone em cima) para não
+       espremer ícone + texto + seta em células de meia largura. */
+    @media (max-width: 767px) {
+      .quick-grid:not(.quick-grid--list) .featured__card {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.875rem 0.625rem;
+        min-height: 108px;
+      }
+
+      .pg-links--list .featured__card {
+        flex-direction: row;
+        text-align: left;
+        justify-content: flex-start;
+        gap: 0.875rem;
+        padding: 0.625rem 0.875rem;
+        min-height: 68px;
+      }
+
+      .quick-grid:not(.quick-grid--list) .featured__icon { width: 44px; height: 44px; }
+      .quick-grid:not(.quick-grid--list) .featured__icon svg { width: 24px; height: 24px; }
+      .quick-grid:not(.quick-grid--list) .featured__arrow { display: none; }
+    }
+
+    @media (max-width: 360px) {
+      .site-footer__pwa { width: 100%; justify-content: center; }
+      .featured__card--half { width: 100%; }
+    }
+
+    @media (min-width: 980px) {
+      .page { padding: 4rem 2rem 3rem; }
+
+      .page-flow { gap: 2.5rem; }
+
+      /* Faixa horizontal (links) em desktop */
+      .pg-links--scroll { gap: 0.875rem; }
+
+      .quick-grid--list .featured__card {
+        padding: 0.875rem 1.125rem;
+        gap: 1rem;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+      }
+
+      .pg-links--list .featured__card {
+        padding: 0.875rem 1.125rem;
+        gap: 1rem;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+      }
+
+      .quick-grid--list .featured__icon {
+        width: 52px;
+        height: 52px;
+      }
+
+      .pg-links--list .featured__icon {
+        width: 52px;
+        height: 52px;
+      }
+
+      .quick-grid--list .featured__body strong { font-size: 1rem; }
+      .pg-links--list .featured__body strong { font-size: 1rem; }
+    }
+  </style>
+
+  <!-- Parse SDK (Back4App) -->
+  <script src="https://unpkg.com/parse@5.2.0/dist/parse.min.js"></script>
+  <script>
+    Parse.initialize('tIKKaJtLdDfZlxKtELzfe99gLOUy7umUCkowAkjK', 'vV29v2zDHmrEmwRglUnOyjm0krtAt4MHtRnkHrFE');
+    Parse.serverURL = 'https://parseapi.back4app.com/';
+  </script>
+
+  <!-- Configuração dinâmica do cliente (gerada pelo Painel Axiumlink) -->
+  <script src="config.js"></script>
+</head>
+
+<body>
+  <main class="page">
+    <div class="page-flow" id="pageFlow">
+
+    <!-- ================================================================
+         HEADER — PERFIL DO CLIENTE
+         ================================================================ -->
+    <header class="profile" id="pageProfile">
+
+      <!-- Banner superior (gerado pelo Painel — design.banner) -->
+      <div class="profile__banner" id="pgBanner" hidden>
+        <div class="profile__banner-scrim" id="pgScrim"></div>
+      </div>
+
+      <!-- TODO: SEU LOGO — troque o <span> por <img src="sua-logo.png" alt="Nome do Cliente"> -->
+      <div class="profile__info" id="pageProfileInfo">
+
+        <div class="avatar-glass-card" id="pgAvatarCard">
+          <div class="profile__avatar" aria-hidden="true">
+            <span id="pgAvatarLetter">C</span>
+            <img id="pgAvatarImg" class="profile__avatar-img" alt="" hidden />
+          </div>
+        </div>
+
+        <!-- TODO: NOME DO CLIENTE (dinâmico) -->
+        <div class="profile__name-row">
+          <h1 class="profile__title" id="pgTitle" data-bind="profileName">Nome do Cliente</h1>
+          <span class="profile__verified" id="pgVerified" title="Perfil verificado" aria-label="Perfil verificado" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m5 12 4 4L19 6" />
+            </svg>
+          </span>
+        </div>
+
+        <!-- TODO: BIOGRAFIA / SERVIÇOS (dinâmico) -->
+        <p class="profile__subtitle" id="pgSubtitle" data-bind="profileBio">Biografia curta, serviços ou tags separadas por • vírgulas.</p>
+
+        <!-- TODO: ENDEREÇO — troque o href pelo link do Google Maps.
+             Remova esta tag inteira se o cliente não tiver endereço. -->
+        <a class="profile__address" id="pgAddress" href="https://www.google.com/maps" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <span data-bind="profileAddress">Rua Exemplo, 123 – Cidade/UF</span>
+        </a>
+
+      </div>
+
+    </header>
+
+    <!-- ================================================================
+         AÇÕES RÁPIDAS (geradas dinamicamente a partir de cfg.quickActions)
+         ================================================================ -->
+
+      <div id="pgQuick" class="quick-grid"></div>
+
+    <!-- ================================================================
+         LISTA DE LINKS (gerada dinamicamente a partir de cfg.links)
+         ================================================================ -->
+
+      <div id="pgLinks" class="pg-links"></div>
+
+    </div>
+
+  </main>
+
+  <!-- ================================================================
+       FOOTER DA PLATAFORMA
+       ================================================================ -->
+  <footer class="site-footer">
+    <button class="site-footer__pwa" type="button" data-pwa>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="7 10 12 15 17 10" />
+        <line x1="12" x2="12" y1="15" y2="3" />
+      </svg>
+      Adicionar à tela inicial
+    </button>
+
+    <!-- Acesso ao painel — link discreto para o administrador -->
+    <a class="site-footer__admin" href="admin.html" title="Acessar painel de gerenciamento" aria-label="Acessar painel de gerenciamento">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="3" />
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" />
+      </svg>
+      <span>Painel</span>
+    </a>
+
+    <!-- TODO: BRANDING DA PLATAFORMA -->
+    <p class="site-footer__brand">
+      Criado por <a href="https://axium.company" target="_blank" rel="noopener">Axium Company</a> — <a href="https://axium.company" target="_blank" rel="noopener">crie sua página</a>
+    </p>
+  </footer>
+
+  <!-- ================================================================
+       PWA — FOLHA DE INSTALAÇÃO (iOS e navegadores sem prompt)
+       ================================================================ -->
+  <div class="pwa-sheet" id="pwaSheet" hidden>
+    <div class="pwa-sheet__panel" role="dialog" aria-modal="true" aria-labelledby="pwa-sheet-title">
+
+      <button class="pwa-sheet__close" type="button" data-pwa-close aria-label="Fechar">&times;</button>
+
+      <div class="pwa-sheet__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" x2="12" y1="15" y2="3" />
+        </svg>
+      </div>
+
+      <h2 class="pwa-sheet__title" id="pwa-sheet-title">Instalar aplicativo</h2>
+      <p class="pwa-sheet__text" id="pwa-sheet-text"></p>
+
+      <button class="pwa-sheet__btn" type="button" id="pwa-install" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" x2="12" y1="15" y2="3" />
+        </svg>
+        <span>Instalar agora</span>
+      </button>
+
+      <ol class="pwa-sheet__steps" id="pwa-ios-steps" hidden>
+        <li>Toque em <strong>Compartilhar</strong> na barra do Safari</li>
+        <li>Escolha <strong>Adicionar à Tela de Início</strong></li>
+        <li>Confirme em <strong>Adicionar</strong></li>
+      </ol>
+
+    </div>
+  </div>
+
+  <!-- Aviso de conexão perdida -->
+  <div class="offline-pill" id="offlinePill" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M1 1l22 22" />
+      <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55" />
+      <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39" />
+      <path d="M10.71 5.05A16 16 0 0 1 22.58 9" />
+      <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88" />
+      <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+      <line x1="12" x2="12.01" y1="20" y2="20" />
+    </svg>
+    <span>Você está offline</span>
+  </div>
+
+  <!-- ================================================================
+       MODAL PIX (elemento nativo <dialog>)
+       ================================================================ -->
+  <dialog class="pix-modal" data-dialog aria-labelledby="pix-title">
+
+    <button class="pix-modal__close" type="button" data-dialog-close aria-label="Fechar">&times;</button>
+
+    <h2 class="pix-modal__title" id="pix-title">Pague com PIX</h2>
+    <p class="pix-modal__text">Escaneie o QR Code ou copie a chave abaixo.</p>
+
+    <!-- TODO: SUA CHAVE PIX -->
+    <div class="pix-modal__key">
+      <span id="pix-key">sua.chave@pix.com.br</span>
+      <button class="pix-modal__copy" type="button" data-copy>Copiar</button>
+    </div>
+
+    <!-- TODO: SEU QR CODE — substitua por <img src="qrcode.png"> -->
+    <div class="pix-modal__qr" id="pix-qr">Seu QR Code aqui</div>
+
+    <!-- TODO: SEU LINK DE PAGAMENTO EXTERNO (opcional) -->
+    <a class="pix-modal__cta" href="#" target="_blank" rel="noopener">Pagar agora</a>
+
+  </dialog>
+
+  <script>
+    /* ================================================================
+       MODAL PIX (nativo <dialog>)
+       ================================================================ */
+    const dialog = document.querySelector('[data-dialog]');
+
+    if (dialog) {
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-dialog-open]') && !dialog.open) dialog.showModal();
+      });
+
+      document.querySelectorAll('[data-dialog-close]').forEach((btn) => {
+        btn.addEventListener('click', () => dialog.close());
+      });
+
+      dialog.addEventListener('click', (e) => {
+        const rect = dialog.getBoundingClientRect();
+        const inBox =
+          e.clientX >= rect.left && e.clientX <= rect.right &&
+          e.clientY >= rect.top && e.clientY <= rect.bottom;
+        if (!inBox) dialog.close();
+      });
+
+      dialog.addEventListener('cancel', () => dialog.close());
+    }
+
+    /* ================================================================
+       COPIAR CHAVE PIX (clipboard com fallback)
+       ================================================================ */
+    const copyBtn = document.querySelector('[data-copy]');
+
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const key = document.getElementById('pix-key');
+        try {
+          await navigator.clipboard.writeText(key.textContent.trim());
+        } catch {
+          const range = document.createRange();
+          range.selectNodeContents(key);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          document.execCommand('copy');
+          sel.removeAllRanges();
+        }
+        copyBtn.textContent = 'Copiado!';
+        setTimeout(() => { copyBtn.textContent = 'Copiar'; }, 2000);
+      });
+    }
+
+    /* ================================================================
+       PWA — "ADICIONAR À TELA INICIAL" (instalação + iOS)
+       ================================================================ */
+    (function () {
+      const isStandalone = () =>
+        (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+        window.navigator.standalone === true;
+
+      const isIOS =
+        /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+      const pwaBtn = document.querySelector('[data-pwa]');
+      const sheet = document.getElementById('pwaSheet');
+      const sheetText = document.getElementById('pwa-sheet-text');
+      const iosSteps = document.getElementById('pwa-ios-steps');
+      const installBtn = document.getElementById('pwa-install');
+      let deferredPrompt = null;
+      let promptSupported = false;
+
+      const showSheet = () => { if (sheet) sheet.hidden = false; };
+      const hideSheet = () => { if (sheet) sheet.hidden = true; };
+
+      document.querySelectorAll('[data-pwa-close]').forEach((el) => el.addEventListener('click', hideSheet));
+      if (sheet) {
+        sheet.addEventListener('click', (e) => { if (e.target === sheet) hideSheet(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hideSheet(); });
+      }
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        promptSupported = true;
+      });
+
+      window.addEventListener('appinstalled', () => {
+        deferredPrompt = null;
+        if (pwaBtn) pwaBtn.style.display = 'none';
+        hideSheet();
+      });
+
+      if (isStandalone()) {
+        if (pwaBtn) pwaBtn.style.display = 'none';
+      } else if (pwaBtn) {
+        pwaBtn.style.display = 'inline-flex';
+        pwaBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            if (pwaBtn) pwaBtn.style.display = 'none';
+          } else {
+            const hasPrompt = promptSupported;
+            if (iosSteps) iosSteps.hidden = !isIOS;
+            if (installBtn) installBtn.hidden = isIOS || !hasPrompt;
+            if (sheetText) {
+              sheetText.textContent = isIOS
+                ? 'No iPhone/iPad, use o Safari para instalar:'
+                : hasPrompt
+                  ? 'Instale o aplicativo para usá-lo a qualquer momento, mesmo offline.'
+                  : 'Para instalar, use o menu do seu navegador e escolha "Adicionar à tela inicial".';
+            }
+            showSheet();
+          }
+        });
+      }
+
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (!deferredPrompt) return;
+          deferredPrompt.prompt();
+          await deferredPrompt.userChoice;
+          deferredPrompt = null;
+          hideSheet();
+          if (pwaBtn) pwaBtn.style.display = 'none';
+        });
+      }
+
+      const pill = document.getElementById('offlinePill');
+      const updateStatus = () => { if (pill) pill.hidden = navigator.onLine; };
+      window.addEventListener('online', updateStatus);
+      window.addEventListener('offline', updateStatus);
+      updateStatus();
+    })();
+  </script>
+
+  <!-- Motores da página pública: ícones + configuração dinâmica do cliente -->
+  <script src="js/icons.js"></script>
+  <script src="js/engine.js"></script>
+</body>
+</html>
