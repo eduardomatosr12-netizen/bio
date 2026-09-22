@@ -1,7 +1,7 @@
 /* ================================================================
    Axiumlink — Motor da página pública (index.html)
    ----------------------------------------------------------------
-   Aplica a configuração do cliente (config.js, localStorage ou Parse)
+   Aplica a configuração do cliente (config.js, localStorage ou Firebase)
    no DOM: textos, cores, fundos, banner, avatar, ações rápidas, links,
    PIX e PWA. Substitui o antigo bloco inline (que ficou truncado).
    ================================================================ */
@@ -82,37 +82,32 @@
 
   async function readConfig() {
     const slug = getSlug();
-    if (typeof Parse === 'undefined') return readLocalConfig();
     if (!slug) {
       console.warn('[Axiumlink] Acesso sem slug (?s=). Usando config local. Use ?s=meu-slug para dados da nuvem.');
       return readLocalConfig();
     }
-    try {
-      const Client = Parse.Object.extend('Client');
-      const query = new Parse.Query(Client);
-      query.equalTo('slug', slug);
-      const result = await query.first();
-      if (result) {
-        const raw = result.get('config');
-        if (raw) {
-          const cfg = typeof raw === 'string' ? JSON.parse(raw) : raw;
-          if (cfg && typeof cfg === 'object') {
-            cfg.slug = slug;
-            try { localStorage.setItem(getStorageKey(), JSON.stringify(cfg)); } catch (e) { /* quota */ }
-            return cfg;
-          }
+
+    /* 1) Firebase (Firestore) — se configurado */
+    const FB = window.AXIUM_FB;
+    if (FB && FB.configured()) {
+      try {
+        const remote = await FB.readConfig(slug);
+        if (remote && typeof remote === 'object') {
+          try { localStorage.setItem(getStorageKey(), JSON.stringify(remote)); } catch (e) { /* quota */ }
+          return remote;
         }
-        console.warn('[Axiumlink] Client encontrado, mas campo "config" vazio.');
-      } else {
-        console.warn('[Axiumlink] Nenhum Client com slug "' + slug + '". Verifique o slug.');
+        console.warn('[Axiumlink] Nenhum documento com slug "' + slug + '" na coleção "clients". Verifique o slug.');
+      } catch (e) {
+        console.error('[Axiumlink] Erro ao ler do Firestore:', e && e.message ? e.message : e);
+        if (String((e && e.message) || '').indexOf('permission-denied') !== -1) {
+          console.error('[Axiumlink] Regras do Firestore sem leitura pública. Use: allow read: if true; — veja o README.');
+        }
       }
-    } catch (e) {
-      const code = e.code || 0;
-      console.error('[Axiumlink] Erro ao buscar config (code ' + code + '):', e.message || e);
-      if (code === 119 || (e.message && e.message.includes('Permission'))) {
-        console.error('[Axiumlink] CLP da classe "Client" não permite Find público. No Back4App → Database → Client → Class Permissions → marque "Find" para "Public".');
-      }
+    } else if (slug) {
+      console.warn('[Axiumlink] Firebase não configurado (firebase-config.js vazio). Usando config local. Cole as chaves do seu projeto para buscar "' + slug + '" na nuvem.');
     }
+
+    /* 2) Fallback: localStorage → config.js */
     return readLocalConfig();
   }
 

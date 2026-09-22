@@ -3,7 +3,7 @@
    ----------------------------------------------------------------
    - Sem ?s=slug na URL, a página pública usa este objeto como fallback.
    - Com ?s=slug, os dados vêm da classe "Client" no Back4App (campo config).
-   - O Painel (admin.html) edita, salva no localStorage e publica no Parse.
+   - O Painel (admin.html) edita, salva no localStorage e publica no Firebase.
    ================================================================ */
 window.AXIUMLINK_CONFIG = {
   slug: 'cliente-demo',

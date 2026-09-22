@@ -6,13 +6,15 @@
    - Assets estáticos (CSS/JS/ícones) → cache primeiro, atualiza em background.
    - Offline: serve o cache quando a rede falhar.
    ================================================================ */
-const CACHE_NAME = 'axiumlink-v1';
+const CACHE_NAME = 'axiumlink-v2';
 const CORE_ASSETS = [
   './',
   './index.html',
   './config.js',
+  './firebase-config.js',
   './js/engine.js',
   './js/icons.js',
+  './js/firebase.js',
   './manifest.webmanifest',
   './favicon-32x32.png',
   './icon-192.png',
